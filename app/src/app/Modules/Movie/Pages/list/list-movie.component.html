@@ -1,0 +1,12 @@
+<h3>Contador {{counterMovies}}</h3>
+
+<div class="row">
+    <card-movie 
+        *ngFor="let movie of movies" 
+        class="col-lg-4 col-md-4"
+        [movie]="movie" 
+        (addMovie)="pickMovie(movie)"
+        (removeMovie)="unselectMovie(movie)"
+    >
+    </card-movie>
+</div>

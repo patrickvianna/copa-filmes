@@ -1,0 +1,9 @@
+<div class="card-movie"> 
+  <div class="row" [className]="checked ? 'checked' : ''">
+    <input type="checkbox" [(ngModel)]="checked"  data-md-icheck (click)="onClickCheckbox()" class="" />
+    <div class="col-9">
+      <h4>{{movie.titulo}}</h4>
+      <h5>{{movie.ano}}</h5>
+    </div>
+  </div>
+</div>
