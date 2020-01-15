@@ -14,22 +14,22 @@ namespace CopaFilmes.Domain.Test.Championship
         [InlineData(0)]
         [InlineData(7)]
         [InlineData(9)]
-        public void ListHaveCounterEqualEight(int quantityElements)
+        public void ChampionshipHasToHaveEqualEightMovies(int quantityElements)
         {
             List<Movie> movies = new List<Movie>();
             for (int i = 0; i < quantityElements; i++)
             {
                 movies.Add(new Movie());
             }
-            MovieBus movieBus = new MovieBus();
+            ChampionshipBus championshipBus = new ChampionshipBus();
 
-            bool validate = movieBus.validListQuantity(movies);
+            bool validate = championshipBus.ValidListQuantity(movies);
 
             Assert.False(validate);
         }
 
         [Fact]
-        public void ListMustBeSort()
+        public void MovieListMustBeSort()
         {
             List<Movie> moviesExpected = new List<Movie>()
             {
@@ -47,7 +47,7 @@ namespace CopaFilmes.Domain.Test.Championship
             };
             MovieBus movieBus = new MovieBus();
 
-            moviesToSort = movieBus.sortListMovies(moviesToSort);
+            moviesToSort = movieBus.SortListMovies(moviesToSort);
 
             moviesToSort.ToExpectedObject().ShouldMatch(moviesExpected);
         }
@@ -57,23 +57,38 @@ namespace CopaFilmes.Domain.Test.Championship
         {
             Movie movieA = new Movie() { nota = 2 };
             Movie movieB = new Movie() { nota = 5 };
-            MovieBus movieBus = new MovieBus();
+            ChampionshipBus championshipBus = new ChampionshipBus();
 
-            Movie winningMovie = movieBus.getWinner(movieA, movieB);
+            Movie winningMovie = championshipBus.GetWinner(movieA, movieB);
 
-            movieB.ToExpectedObject(winningMovie);
+            movieB.ToExpectedObject().ShouldMatch(winningMovie);
         }
 
         [Fact]
-        public void HaveToWinWhoHasHighestGrade()
+        public void HaveToWinWhoHasTitleFirstInAlphabeticalOrder()
         {
             Movie movieA = new Movie() { nota = 3, titulo = "Beethoven" };
             Movie movieB = new Movie() { nota = 3, titulo = "Assassins Creed" };
-            MovieBus movieBus = new MovieBus();
+            ChampionshipBus championshipBus = new ChampionshipBus();
 
-            Movie winningMovie = movieBus.getWinner(movieA, movieB);
+            Movie winningMovie = championshipBus.GetWinner(movieA, movieB);
 
-            movieB.ToExpectedObject(winningMovie);
+            movieB.ToExpectedObject().ShouldMatch(winningMovie);
+        }
+
+        [Fact]
+        public void HaveChampion()
+        {
+            List<Movie> moviesExpected = new List<Movie>()
+            {
+                new Movie() {titulo = "Beyblade", nota = 2},
+                new Movie() {titulo = "Destructive", nota = 4},
+                new Movie() {titulo = "Avengers", nota = 3},
+                new Movie() {titulo = "Cars", nota = 5}
+            };
+            ChampionshipBus championshipBus = new ChampionshipBus();
+
+            championshipBus.RankedList(moviesExpected);
         }
     }
 }

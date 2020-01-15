@@ -20,5 +20,10 @@ namespace CopaFilmes.Application.Business
                 throw ex;
             }
         }
+
+        public List<Movie> SortListMovies(List<Movie> moviesToSort)
+        {
+            return moviesToSort.OrderBy(x => x.titulo).ToList();
+        }
     }
 }
