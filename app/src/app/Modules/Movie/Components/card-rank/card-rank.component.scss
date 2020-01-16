@@ -1,0 +1,15 @@
+.card-rank{
+    margin: 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #3b3b3b;
+    border-radius: 5px;
+
+    .rank-number {
+        background-color: #8a8a8a;
+    }
+
+    .padding-top-10{
+        padding-top: 10px;
+    }
+}

@@ -1,1 +1,18 @@
-<h1>RANK</h1>
+<div class="row">
+    <div class="jumbotron background-container col-lg-10 offset-lg-1 col-md-10 offset-md-1">
+        <h4 class="text-secondary text-center"> CAMPEONATO DE FILMES</h4>
+        <h2 class="text-white text-center">Resultado Final</h2>
+        <h5 class="text-light text-center">Veja o resultado final do Campeonato de filmes de forma simples e rápida</h5>
+    </div>
+</div>
+<div class="row">
+    <div class="offset-1">
+        <button class="btn btn-primary " [routerLink]="['/']">Voltar</button>
+    </div>
+</div>
+
+<div *ngFor="let movie of rankChampionship" class="row">
+    <div class="col-lg-6 offset-lg-3 col-md-6 offset-md-3">
+        <card-rank [movie]="movie"></card-rank>
+    </div>
+</div>
