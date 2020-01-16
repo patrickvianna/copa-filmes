@@ -21,9 +21,14 @@ namespace CopaFilmes.Application.Business
             }
         }
 
-        public List<Movie> SortListMovies(List<Movie> moviesToSort)
+        public async Task<List<Movie>> SortListMoviesByName(List<Movie> moviesToSort)
         {
             return moviesToSort.OrderBy(x => x.titulo).ToList();
+        }
+
+        public async Task<List<Movie>> SortListMoviesByRank(List<Movie> moviesToSort)
+        {
+            return moviesToSort.OrderBy(x => x.rank).ToList();
         }
     }
 }

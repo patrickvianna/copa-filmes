@@ -10,7 +10,7 @@ namespace CopaFilmes.Application.Business
     {
         private readonly int numberParticipants = 8;
 
-        public Boolean ValidListQuantity(List<Movie> movies)
+        public async Task<Boolean> ValidListQuantity(List<Movie> movies)
         {
             if (movies != null && movies.Count() == numberParticipants)
                 return true;
@@ -18,10 +18,10 @@ namespace CopaFilmes.Application.Business
             throw new Exception("Campeonato deve conter 8 participantes");
         }
 
-        public Movie GetWinner(Movie movieA, Movie movieB)
+        public async Task<Movie> GetWinner(Movie movieA, Movie movieB)
         {
             if (movieA.nota == movieB.nota)
-                return TieBreaker(movieA, movieB);
+                return await TieBreaker(movieA, movieB);
 
             return movieA.nota > movieB.nota ? movieA : movieB;
         }
@@ -30,10 +30,12 @@ namespace CopaFilmes.Application.Business
         {
             MovieBus moviebus = new MovieBus();
 
-            int rankNumber = GetRankNumber(movies.Count());
-            movies = moviebus.SortListMovies(movies);
+            int rankNumber = await GetRankNumber(movies.Count());
+            movies = await moviebus.SortListMoviesByName(movies);
+            movies = await RankPositions(movies, rankNumber);
+            movies = await moviebus.SortListMoviesByRank(movies);
 
-            return await RankPositions(movies, rankNumber);
+            return movies;
         }
 
         private async Task<List<Movie>> RankPositions(List<Movie> movies, int rankNumber)
@@ -42,22 +44,22 @@ namespace CopaFilmes.Application.Business
 
             while (rankNumber != 1)
             {
-                List<Movie> winnersMovies = RankedDispute(movies);
-                List<Movie> losersMovies = GetLosers(movies, winnersMovies);
+                List<Movie> winnersMovies = await RankedDispute(movies);
+                List<Movie> losersMovies = await GetLosers(movies, winnersMovies);
                 
-                losersMovies = SetRankPosition(losersMovies, rankNumber);
+                losersMovies = await SetRankPosition(losersMovies, rankNumber);
                 rankList.AddRange(losersMovies);
 
                 movies = winnersMovies;
                 rankNumber--;
             }
-            List<Movie> champion = SetRankPosition(movies, rankNumber);
+            List<Movie> champion = await SetRankPosition(movies, rankNumber);
             rankList.AddRange(champion);
 
             return rankList;
         }
 
-        private async List<Movie> RankedDispute(List<Movie> movies)
+        private async Task<List<Movie>> RankedDispute(List<Movie> movies)
         {
             int firstIndex = 0;
             int lastIndex = movies.Count() - 1;
@@ -66,7 +68,7 @@ namespace CopaFilmes.Application.Business
 
             while(firstIndex != lastIndex + 1)
             {
-                Movie winner = GetWinner(movies[firstIndex], movies[lastIndex]);
+                Movie winner = await GetWinner(movies[firstIndex], movies[lastIndex]);
                 int indexOnInsert = insertOnFirst ? firstIndex : moviesNextStep.Count() - firstIndex;
                 moviesNextStep.Insert(indexOnInsert, winner);
 
@@ -80,17 +82,11 @@ namespace CopaFilmes.Application.Business
 
         private async Task<int> GetRankNumber(int quantityElements)
         {
-            if ((quantityElements % 2) != 0)
+            double logNumber = Math.Log(quantityElements, 2);
+            if ((int)logNumber != logNumber)
                 throw new Exception("O número de candidatos deve ser multiplo de 2");
-            int rankNumber = 0;
 
-            while(quantityElements != 0)
-            {
-                quantityElements = quantityElements / 2;
-                rankNumber++;
-            }
-
-            return rankNumber++;
+            return (int)logNumber + 1;
         }
 
         private async Task<List<Movie>> GetLosers(List<Movie> movies, List<Movie> winners)
@@ -104,7 +100,7 @@ namespace CopaFilmes.Application.Business
                 ? movieA : movieB;
         }
 
-        private Task<List<Movie>> SetRankPosition(List<Movie> movies, int rankNumber)
+        private async Task<List<Movie>> SetRankPosition(List<Movie> movies, int rankNumber)
         {
             movies.ForEach(x => x.rank = rankNumber);
             return movies;

@@ -14,7 +14,7 @@ namespace CopaFilmes.Domain.Test.Championship
         [InlineData(0)]
         [InlineData(7)]
         [InlineData(9)]
-        public void ChampionshipHasToHaveEqualEightMovies(int quantityElements)
+        public async void ChampionshipHasToHaveEqualEightMovies(int quantityElements)
         {
             List<Movie> movies = new List<Movie>();
             for (int i = 0; i < quantityElements; i++)
@@ -23,13 +23,13 @@ namespace CopaFilmes.Domain.Test.Championship
             }
             ChampionshipBus championshipBus = new ChampionshipBus();
 
-            bool validate = championshipBus.ValidListQuantity(movies);
+            bool validate = await championshipBus.ValidListQuantity(movies);
 
             Assert.False(validate);
         }
 
         [Fact]
-        public void MovieListMustBeSort()
+        public async void MovieListMustBeSort()
         {
             List<Movie> moviesExpected = new List<Movie>()
             {
@@ -47,31 +47,31 @@ namespace CopaFilmes.Domain.Test.Championship
             };
             MovieBus movieBus = new MovieBus();
 
-            moviesToSort = movieBus.SortListMovies(moviesToSort);
+            moviesToSort = await movieBus.SortListMoviesByName(moviesToSort);
 
             moviesToSort.ToExpectedObject().ShouldMatch(moviesExpected);
         }
 
         [Fact]
-        public void HaveToWinWhoHasHighestGrade()
+        public async void HaveToWinWhoHasHighestGrade()
         {
             Movie movieA = new Movie() { nota = 2 };
             Movie movieB = new Movie() { nota = 5 };
             ChampionshipBus championshipBus = new ChampionshipBus();
 
-            Movie winningMovie = championshipBus.GetWinner(movieA, movieB);
+            Movie winningMovie = await championshipBus.GetWinner(movieA, movieB);
 
             movieB.ToExpectedObject().ShouldMatch(winningMovie);
         }
 
         [Fact]
-        public void HaveToWinWhoHasTitleFirstInAlphabeticalOrder()
+        public async void HaveToWinWhoHasTitleFirstInAlphabeticalOrder()
         {
             Movie movieA = new Movie() { nota = 3, titulo = "Beethoven" };
             Movie movieB = new Movie() { nota = 3, titulo = "Assassins Creed" };
             ChampionshipBus championshipBus = new ChampionshipBus();
 
-            Movie winningMovie = championshipBus.GetWinner(movieA, movieB);
+            Movie winningMovie = await championshipBus.GetWinner(movieA, movieB);
 
             movieB.ToExpectedObject().ShouldMatch(winningMovie);
         }

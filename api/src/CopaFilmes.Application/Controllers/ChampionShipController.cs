@@ -14,13 +14,14 @@ namespace CopaFilmes.Application.Controllers
     public class ChampionShipController : ControllerBase
     {
         // POST: api/ChampionShip/GenerateChampionship
+        [Route("GenerateChampionship")]
         [HttpPost]
-        public Task<ActionResult<List<Movie>>> GenerateChampionship([FromBody] List<Movie> movies)
+        public async Task<ActionResult<List<Movie>>> Post([FromBody] List<Movie> movies)
         {
             ChampionshipBus championshipBus = new ChampionshipBus();
-            List<Movie> rankedMovies = championshipBus.RankedList(movies);
+            var rankedMovies = await championshipBus.RankedList(movies);
+            return rankedMovies;
 
-            return Ok(rankedMovies);
         }
     }
 }
