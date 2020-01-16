@@ -1,8 +1,14 @@
 .card-movie {
     padding:15px;
 
+    .row {
+        padding:15px;
+        
+    }
     .checked {
-        background-color: #5afaca;
+        border-style: solid;;
+        border-width: 1px;
+        border-color: #5afaca;
     }
     
 }

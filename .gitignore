@@ -113,3 +113,4 @@ api/src/CopaFilmes.Application/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAna
 api/src/CopaFilmes.Application/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
 api/src/CopaFilmes.Application/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.resources.dll
 api/src/CopaFilmes.Application/bin/Debug/netcoreapp3.1/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
+/api/test/CopaFilmes.Domain.Test/bin/Debug/netcoreapp3.1

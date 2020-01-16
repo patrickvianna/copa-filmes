@@ -9,6 +9,10 @@ import { MovieService } from 'src/app/Services/MovieService';
 import { ListMovieComponent } from './Pages/list/list-movie.component';
 import { RankMovieComponent } from './Pages/rank/rank-movie.component';
 import { CardMovieComponent } from './Components/card-movie/card-movie.component';
+import { ToastrService } from 'ngx-toastr';
+import { ChampionshipService } from 'src/app/Services/championShipService';
+import { DataService } from 'src/app/Services/dataService';
+import { CardRankComponent } from './Components/card-rank/card-rank.component';
 
 const routes: Routes = [
   { path: '', component: ListMovieComponent },
@@ -23,9 +27,12 @@ const routes: Routes = [
     RouterModule.forChild(routes),
   ],
   providers: [
+    ChampionshipService,
     MovieService,
-    BaseService
+    BaseService,
+    ToastrService,
+    DataService
   ],
-  declarations: [ListMovieComponent, RankMovieComponent, CardMovieComponent]
+  declarations: [ListMovieComponent, RankMovieComponent, CardMovieComponent, CardRankComponent]
 })
 export class MovieModule { }

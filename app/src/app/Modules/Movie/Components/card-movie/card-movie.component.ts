@@ -17,6 +17,7 @@ export class CardMovieComponent implements OnInit {
 
   ngOnInit() {
   }
+  
   addMovieWasClicked(event): void {
     this.addMovie.emit([event]);
   }

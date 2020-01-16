@@ -4,18 +4,19 @@ import { HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class BaseService {
-  serviceUrl = 'http://localhost:54652/api/'; 
+  private serviceUrl = 'http://localhost:54652/api/'; 
 
   requestOptions = new RequestOptions();
   
   constructor(private http: Http) {
     this.requestOptions.headers = new Headers({
-      'Content-Type':  'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
-      'Access-Control-Allow-Headers': 'X-Requested-With,content-type'
+      'Content-Type':  'application/json'
     })
   }
+  // ,
+  //     'Access-Control-Allow-Origin': '*',
+  //     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+  //     'Access-Control-Allow-Headers': 'X-Requested-With,content-type'
 
   public post(url: string, data: any) {
     return new Promise((resolve, reject) => {
