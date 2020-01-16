@@ -28,7 +28,7 @@ namespace CopaFilmes.Application.Business
 
         public async Task<List<Movie>> SortListMoviesByRank(List<Movie> moviesToSort)
         {
-            return moviesToSort.OrderBy(x => x.rank).ToList();
+            return moviesToSort.OrderBy(x => x.rank).ThenByDescending(x => x.nota).ToList();
         }
     }
 }
