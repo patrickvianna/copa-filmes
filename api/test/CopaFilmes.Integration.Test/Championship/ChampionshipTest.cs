@@ -16,17 +16,17 @@ using Xunit;
 
 namespace CopaFilmes.Integration.Test
 {
-    public class ValueTest
+    public class ChampionshipTest
     {
-        private string WebAppName => "GlobalExceptionHandling.WebApp";
+        private string WebAppName => "CopaFilmes.Application";
         private readonly HttpClient httpClient;
         private string testLibPath;
         private string Url => "api/ChampionShip";
 
-        public ValueTest()
+        public ChampionshipTest()
         {
             var pathRoot = this.GetAppBasePath(this.WebAppName);
-            var builder = new WebHostBuilder().UseContentRoot(pathRoot).UseEnvironment("Development").UseStartup(this.WebAppName);
+            var builder = new WebHostBuilder().UseContentRoot(pathRoot).UseStartup(this.WebAppName);
             var testServer = new TestServer(builder);
             this.httpClient = testServer.CreateClient();
         }
