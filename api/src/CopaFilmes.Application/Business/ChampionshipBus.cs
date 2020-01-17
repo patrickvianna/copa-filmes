@@ -11,12 +11,10 @@ namespace CopaFilmes.Application.Business
     {
         private readonly int numberParticipants = 8;
 
-        public async Task<Boolean> ValidListQuantity(List<Movie> movies)
+        public async Task ValidListQuantity(List<Movie> movies)
         {
-            if (movies != null && movies.Count() == numberParticipants)
-                return true;
-
-            throw new InvalidOperationException(Message.ChampionshipMessage.NumberParticipantsShouldBeEqual(numberParticipants));
+            if (movies == null || movies.Count() != numberParticipants)
+                throw new InvalidOperationException(Message.ChampionshipMessage.NumberParticipantsShouldBeEqual(numberParticipants));
         }
 
         public async Task<Movie> GetWinner(Movie movieA, Movie movieB)
@@ -29,6 +27,8 @@ namespace CopaFilmes.Application.Business
 
         public async Task<List<Movie>> RankedList(List<Movie> movies)
         {
+            await ValidListQuantity(movies);
+            
             MovieBus moviebus = new MovieBus();
 
             int rankNumber = await GetRankNumber(movies.Count());

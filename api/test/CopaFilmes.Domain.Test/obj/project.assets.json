@@ -2771,7 +2771,10 @@
         },
         "runtime": {
           "bin/placeholder/CopaFilmes.Domain.dll": {}
-        }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       }
     }
   },

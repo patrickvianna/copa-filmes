@@ -19,7 +19,9 @@ namespace CopaFilmes.Application.Controllers
         public async Task<ActionResult<List<Movie>>> Post([FromBody] List<Movie> movies)
         {
             ChampionshipBus championshipBus = new ChampionshipBus();
+
             var rankedMovies = await championshipBus.RankedList(movies);
+
             return rankedMovies;
 
         }

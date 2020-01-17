@@ -26,7 +26,7 @@ export class ListMovieComponent implements OnInit {
     this.movieService.all().then(result => {
       this.movies = result;
     }).catch(result => {
-      console.log('result :', result);
+      this.toastr.error("Erro ao conectar ao servidor", "Erro")
     });
   }
 
@@ -42,14 +42,13 @@ export class ListMovieComponent implements OnInit {
       this._dataService.setOption("RankChampionship", result);
       this.router.navigateByUrl('/rank');
     }).catch(error => {
+      this.toastr.error("Erro ao conectar ao servidor", "Erro")
     })
   }
 
   pickMovie(movie: Movie) {
     this.pickMovieList.push(movie);
     this.counterMovies++;
-    console.log('movie :', movie);
-    console.log('this.pickMovieList :', this.pickMovieList);
   }
 
   unselectMovie(movie: Movie) {
