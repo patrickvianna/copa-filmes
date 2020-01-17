@@ -1,8 +1,5 @@
 <div class="card-movie"> 
   <div class="{{checked ? 'checked' : ''}} row " (click)="onClickCheckbox()">
-      <div class="col-1">
-        <input type="checkbox" [(ngModel)]="checked"  data-md-icheck  class="" />
-      </div>
       <div class="col-11">
         <h4>{{movie.titulo}}</h4>
         <h5>{{movie.ano}}</h5>
