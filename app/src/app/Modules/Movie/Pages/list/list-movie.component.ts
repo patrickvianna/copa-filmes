@@ -32,7 +32,7 @@ export class ListMovieComponent implements OnInit {
 
   generateChampionship() {
     if (!this.validNumberOfParticipants()) {
-      this.toastr.warning("O número de participantes deve ser igual a 8.", "Atenção")
+      this.toastr.warning("O número de participantes no campeonato deve ser igual a 8.", "Atenção")
       return;
     }
 

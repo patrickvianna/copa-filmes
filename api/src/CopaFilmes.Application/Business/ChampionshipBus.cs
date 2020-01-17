@@ -1,4 +1,5 @@
 ﻿using CopaFilmes.Domain.Entities;
+using CopaFilmes.Domain.Message;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace CopaFilmes.Application.Business
             if (movies != null && movies.Count() == numberParticipants)
                 return true;
 
-            throw new Exception("Campeonato deve conter 8 participantes");
+            throw new InvalidOperationException(Message.ChampionshipMessage.NumberParticipantsShouldBeEqual(numberParticipants));
         }
 
         public async Task<Movie> GetWinner(Movie movieA, Movie movieB)
@@ -84,7 +85,7 @@ namespace CopaFilmes.Application.Business
         {
             double logNumber = Math.Log(quantityElements, 2);
             if ((int)logNumber != logNumber)
-                throw new Exception("O número de candidatos deve ser multiplo de 2");
+                throw new InvalidOperationException("O número de candidatos deve ser multiplo de 2");
 
             return (int)logNumber + 1;
         }
