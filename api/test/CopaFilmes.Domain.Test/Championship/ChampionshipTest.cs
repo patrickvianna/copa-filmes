@@ -16,6 +16,7 @@ namespace CopaFilmes.Domain.Test.Championship
         [InlineData(9)]
         public async void ChampionshipHasToHaveEqualEightMovies(int quantityElements)
         {
+            int numberParticipants = 8;
             List<Movie> movies = new List<Movie>();
             for (int i = 0; i < quantityElements; i++)
             {
@@ -23,9 +24,10 @@ namespace CopaFilmes.Domain.Test.Championship
             }
             ChampionshipBus championshipBus = new ChampionshipBus();
 
-            bool validate = await championshipBus.ValidListQuantity(movies);
+            var message = Assert.ThrowsAsync<InvalidOperationException>(() =>
+                championshipBus.ValidListQuantity(movies)).Result.Message;
 
-            Assert.False(validate);
+            Assert.Equal(message, Message.Message.ChampionshipMessage.NumberParticipantsShouldBeEqual(numberParticipants));
         }
 
         [Fact]

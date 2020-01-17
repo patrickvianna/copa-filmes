@@ -15,6 +15,8 @@ import { DataService } from 'src/app/Services/dataService';
 export class RankMovieComponent implements OnInit {
 
   public contactFormGroup: FormGroup;
+  public rankChampionship;
+  
   constructor(private movieProvider: MovieService, private router: Router, private _dataService: DataService) {
     this.rankChampionship = this._dataService.getOption()["RankChampionship"];
 
@@ -24,16 +26,6 @@ export class RankMovieComponent implements OnInit {
     console.log('this.rankChampionship    :', this.rankChampionship   );
 
 
-  }
-  public rankChampionship;
-
-  cadastrar() {
-    this.movieProvider.all().then(result => {
-      this.router.navigate(['consulta/']);
-      console.log('result :', result);
-    }).catch(result => {
-      console.log('result :', result);
-    });
   }
 
   ngOnInit() {
