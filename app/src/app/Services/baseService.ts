@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { HttpHeaders } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class BaseService {
@@ -8,7 +9,7 @@ export class BaseService {
 
   requestOptions = new RequestOptions();
   
-  constructor(private http: Http) {
+  constructor(private http: Http, private toastr: ToastrService) {
     this.requestOptions.headers = new Headers({
       'Content-Type':  'application/json'
     })
@@ -20,11 +21,11 @@ export class BaseService {
 
   public post(url: string, data: any) {
     return new Promise((resolve, reject) => {
-            // const header: Headers = new Headers();
       this.http.post(this.serviceUrl + url, data, this.requestOptions).subscribe((result: any) => {
         resolve(result.json());
       },
       err => {
+        this.serverError(err.status);
         console.log(err);
         reject(err);
       });
@@ -37,6 +38,7 @@ export class BaseService {
         resolve(result.json());
       },
       err => {
+        this.serverError(err.status);
         console.log(err);
         reject(err);
       });
@@ -49,6 +51,7 @@ export class BaseService {
         resolve(result.json());
       },
       err => {
+        this.serverError(err.status);
         console.log(err);
         reject(err);
       });
@@ -61,9 +64,15 @@ export class BaseService {
         resolve(result.json());
       },
       err => {
+        this.serverError(err.status);
         console.log(err);
         reject(err);
       });
     });
+  }
+
+  private serverError(status: number) {
+    if(status == 0 || status == 500)
+      this.toastr.error("Ops, houve algum erro no servidor")
   }
 }

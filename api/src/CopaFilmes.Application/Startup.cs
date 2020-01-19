@@ -47,6 +47,7 @@ namespace CopaFilmes.Application
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseGlobalExceptionHandler();
 
             app.UseRouting();
 

@@ -25,8 +25,6 @@ export class ListMovieComponent implements OnInit {
   list() {
     this.movieService.all().then(result => {
       this.movies = result;
-    }).catch(result => {
-      this.toastr.error("Erro ao conectar ao servidor", "Erro")
     });
   }
 
@@ -41,8 +39,9 @@ export class ListMovieComponent implements OnInit {
       console.log(result);
       this._dataService.setOption("RankChampionship", result);
       this.router.navigateByUrl('/rank');
-    }).catch(error => {
-      this.toastr.error("Erro ao conectar ao servidor", "Erro")
+    }).catch(err => {
+      const message = JSON.parse(err._body).detail;
+      this.toastr.warning(message, "Atenção")
     })
   }
 
